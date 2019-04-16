@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bare-css@2.0.3/css/bare.min.css" />
+    </head>
+    <body>
+        <h1>Mark Search</h1>
+        <section>
+            <input placeholder="Search for a Trademark" id="search" />
+            <button onClick="doFetch()">Search</button>
+        </section>
+        <section id="output">
+        </section>
+
+<script>
+    let state = {
+        data: [],
+    };
+
+    function render() {
+        let output = document.querySelector('#output');
+        output.innerHTML = '';
+
+        for (let gif of state.data) {
+            let image = document.createElement('p');
+            image.innerHTML('src', domains.domain);
+            output.appendChild(image);
+
+        }
+    }
+
+    function doFetch() {
+        let element = document.querySelector('#search');
+        let searchTerm = element.value;
+        fetch('https://api.domainsdb.info/search?query={' + searchTerm + '}')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                state.data = data.data;
+                render();
+            });
+    }
+
+</script>
+</body>
+</html>
